@@ -4,7 +4,10 @@ import time
 
 def main():
 
-    f = open("Payloads", "r") # filename of Prefix
+    # Inputs
+    # -----------------------------------------------
+
+    f = open("prefixes", "r") # filename of Prefix
     prefixes = re.split("\n", str(f.read()))
     f.close()
 
@@ -15,6 +18,8 @@ def main():
     suffixes = ["etc/shadow"] # suffix
     
     delay = 1 # time of delay between every request
+
+    # -----------------------------------------------
 
     # for every url
     for target in targets:
