@@ -51,3 +51,5 @@ def main():
                                 if re.search("daemon", str(res.content)) or re.search("root", str(res.content)) or re.search("bin", str(res.content)):
                                     print(url) # vuln                
                             except: pass
+
+main()
