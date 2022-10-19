@@ -57,4 +57,5 @@ def main():
                                     print(url) # vuln                
                             except: pass
 
+# Run Function
 main()
