@@ -35,7 +35,7 @@ def main():
                 
                 if search: # if "="
                     url = target # copy var
-                    url[search.start(), search.end()] = "=" + payload # replace "=" with "=" + payload
+                    url[search.start():search.end()] = "=" + payload # replace "=" with "=" + payload
                     try:
                         res = requests.get(url) # request
                         time.sleep(delay) # delay
@@ -48,7 +48,7 @@ def main():
                         search = re.search("=", target[search.end():]) # search for "=" in range (number of "=" in target)
                         if search: # if "="
                             url = target # copy var
-                            url[search.start(), search.end()] = "=" + payload # replace "=" with "=" + payload
+                            url[search.start():search.end()] = "=" + payload # replace "=" with "=" + payload
                             try:
                                 res = requests.get(url) # request
                                 time.sleep(delay) # delay
