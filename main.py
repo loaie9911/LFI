@@ -1,5 +1,4 @@
 import re
-from urllib.parse import urlsplit
 import requests
 import time
 import os
