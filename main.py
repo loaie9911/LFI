@@ -51,5 +51,6 @@ def main():
                                 print(f"{Fore.LIGHTRED_EX}[vuln]  {Fore.WHITE}{url}") # vuln                
                         except: pass
 
+
 # Run Function
 main()
