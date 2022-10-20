@@ -44,11 +44,11 @@ def main():
                         url = ''.join(url)
                         try:
                             res = requests.get(url) # request
-                            print(Fore.LIGHTBLUE_EX+ url)
+                            print(f"{Fore.LIGHTBLUE_EX}[info]  {Fore.WHITE}{url}")
                             time.sleep(delay) # delay
                             # if content in ["daemon" or "root" or "bin"]
                             if re.search("daemon", str(res.content)) or re.search("root", str(res.content)) or re.search("bin", str(res.content)):
-                                print(Fore.LIGHTRED_EX + url) # vuln                
+                                print(f"{Fore.LIGHTRED_EX}[vuln]  {Fore.WHITE}{url}") # vuln                
                         except: pass
 
 # Run Function
