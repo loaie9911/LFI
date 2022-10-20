@@ -1,5 +1,5 @@
 import re
-from urllib.parse import urlsplit
+from colorama import Fore
 import requests
 import time
 import os
@@ -44,10 +44,11 @@ def main():
                         url = ''.join(url)
                         try:
                             res = requests.get(url) # request
+                            print(Fore.LIGHTBLUE_EX+ url)
                             time.sleep(delay) # delay
                             # if content in ["daemon" or "root" or "bin"]
                             if re.search("daemon", str(res.content)) or re.search("root", str(res.content)) or re.search("bin", str(res.content)):
-                                print(url) # vuln                
+                                print(Fore.LIGHTRED_EX + url) # vuln                
                         except: pass
 
 # Run Function
